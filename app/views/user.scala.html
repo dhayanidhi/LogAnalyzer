@@ -1,0 +1,75 @@
+@import com.sample._
+@(userForm: Form[User], userAction: Form[UserAction], usersAcc: List[UserAccountMapUser])
+@import helper._
+@main("Trying with Play") {
+    <h1>'User Management':</h1>
+    <ul>
+        @for(userA <- usersAcc) {
+            <li>Hello! @userA.user.name - @userA.user.age - @userA.userAccount.status - @userA.userAccount.id</li>
+            <table class="useraction">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Message</th>
+                    <th>UserId</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @userA.userActions.map { action =>
+                <tr>
+                    <td>@action.id</td>
+                    <td>@action.message</td>
+                    <td>@action.userId</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        }
+    </ul>
+<!--    <ul>
+&lt;!&ndash;        <select class = "selectone">
+            @for(user <- usersAcc){
+            <option value = @user.user.id>
+                @user.user.name
+            </option>
+            }
+        </select>&ndash;&gt;
+        <select name="user" id="userId">
+            @usersAcc.map{e=>format.raw("<option value=@e.user.id> @e.user.name </option>")}
+        </select>
+        <!--
+
+
+    </ul>-->
+    @form(action = routes.Application.addUserAccount, args = 'id -> "userForm") {
+        @inputText(
+            field = userForm("name"),
+            args = '_label -> "What's your name?", 'placeholder -> "Bob"
+        )
+        @inputText(
+            field = userForm("email"),
+            args = '_label -> "What's your email?", 'placeholder -> "user@domain.com"
+        )
+        @inputText(
+            field = userForm("age"),
+            args = '_label -> "What's your age?", 'placeholder -> 99
+        )
+        <p class="buttons">
+            <input type="submit" id="submit1">
+        <p>
+    }
+    @form(action = routes.Application.addUserMessage, args = 'id -> "userAction") {
+        @inputText(
+            field = userAction("message"),
+            args = '_label -> "Message", 'placeholder -> "someText"
+        )
+        @helper.input(userAction("user")) { (id, name, value, args) =>
+            <select name="user" id="userId">
+                @usersAcc.map{e=>format.raw("<option value=@e.user.id> @e.user.name </option>")}
+            </select>
+        }
+        <p class="buttons">
+            <input type="submit" id="submit2">
+        <p>
+    }
+}
