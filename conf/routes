@@ -1,0 +1,20 @@
+GET     /                       controllers.Application.index
+
+GET     /1                      controllers.Application.sample
+GET     /2                      controllers.Application.todo
+GET     /3                      controllers.Application.redirect
+GET     /4                      controllers.Application.showUserManagment
+# Hello action
+GET     /user                   controllers.Application.addUser
+GET     /userAccount            controllers.Application.addUserAccount
+GET     /userMessage            controllers.Application.addUserMessage
+
+GET     /assets/﻿*file          controllers.Assets.at(path="/public", file)
+GET     /sum/:value             controllers.Application.square(value:Int)
+
+# pure rest
+GET     /users                  controllers.UserService.getAllUser
+POST    /users                  controllers.UserService.createUser
+GET     /users/:user          controllers.UserService.getUser(user:String)
+POST    /users/:user/message  controllers.UserService.createMsg(user:String)
+DELETE  /users/:user          controllers.UserService.deleteUser(user:String)
