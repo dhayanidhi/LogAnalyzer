@@ -1,0 +1,6 @@
+# Compiled class
+.class
+
+# Ignore generated project and target folder
+*/project/*
+target
